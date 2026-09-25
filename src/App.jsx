@@ -108,9 +108,15 @@ function solveCatenaryParameter(halfSpan, rise) {
   const valueAt = (parameter) => parameter * (Math.cosh(halfSpan / parameter) - 1)
   let low = 0.0001
   let high = Math.max(halfSpan, rise, 1)
+  let expansionCount = 0
 
-  while (valueAt(high) > rise) {
+  while (valueAt(high) > rise && expansionCount < 60) {
     high *= 2
+    expansionCount += 1
+  }
+
+  if (valueAt(high) > rise) {
+    return high
   }
 
   for (let index = 0; index < 80; index += 1) {
@@ -126,7 +132,7 @@ function solveCatenaryParameter(halfSpan, rise) {
   return high
 }
 
-function sampleCatenary(halfSpan, baseY, apexY, steps) {
+function sampleInvertedCatenary(halfSpan, baseY, apexY, steps) {
   const rise = apexY - baseY
   const parameter = solveCatenaryParameter(halfSpan, rise)
 
@@ -220,18 +226,21 @@ function buildModel({ span, rise, thickness, pillarWidth, pillarHeight }) {
   const outerLeftSpring = extradosLeft[0]
   const outerApex = extradosLeft.at(-1)
 
-  const intradosCatenary = sampleCatenary(
+  const intradosInvertedCatenary = sampleInvertedCatenary(
     halfSpan,
     pillarHeight,
     pillarHeight + rise,
     catenarySamples,
   )
-  const extradosCatenary = sampleCatenary(
-    Math.abs(outerLeftSpring.x),
+  const extradosInvertedCatenary = sampleInvertedCatenary(
+    halfSpan,
     outerLeftSpring.y,
     outerApex.y,
     catenarySamples,
   )
+  const extradosCatenaryApexPoint = extradosInvertedCatenary[catenarySamples / 2]
+  const extradosCatenaryRise =
+    extradosCatenaryApexPoint.y - extradosInvertedCatenary[0].y
 
   const xMin = -halfSpan - pillarWidth - thickness * 1.5
   const xMax = halfSpan + pillarWidth + thickness * 1.5
@@ -258,8 +267,8 @@ function buildModel({ span, rise, thickness, pillarWidth, pillarHeight }) {
     archPath: toCanvasPath(archEnvelope, true),
     intradosPath: toCanvasPath(intrados),
     extradosPath: toCanvasPath(extrados),
-    intradosCatenaryPath: toCanvasPath(intradosCatenary),
-    extradosCatenaryPath: toCanvasPath(extradosCatenary),
+    intradosCatenaryPath: toCanvasPath(intradosInvertedCatenary),
+    extradosCatenaryPath: toCanvasPath(extradosInvertedCatenary),
     leftPillar: {
       x: leftPillarTop.x,
       y: leftPillarTop.y,
@@ -273,9 +282,9 @@ function buildModel({ span, rise, thickness, pillarWidth, pillarHeight }) {
       height: rightPillarBottom.y - rightPillarTop.y,
     },
     metrics: {
-      section: pillarWidth * pillarWidth,
+      squarePillarSection: pillarWidth * pillarWidth,
       intradosLength: radius * Math.abs(chooseUpperDelta(leftSpringAngle, leftApexAngle, leftCenter.y, radius)) * 2,
-      catenaryRise: outerApex.y - outerLeftSpring.y,
+      catenaryRise: extradosCatenaryRise,
       apexHeight: pillarHeight + rise,
     },
   }
@@ -300,15 +309,15 @@ function App() {
           <h1>Arc en tiers-point, épaisseur constante et piliers paramétrables</h1>
           <p className="lead">
             Cette application React trace un arc brisé interactif posé sur deux piliers,
-            avec son intrados, son extrados et leurs chainettes pour comparer rapidement
-            les proportions utiles au dimensionnement.
+            avec son intrados, son extrados et leurs chaînettes renversées pour
+            comparer rapidement les proportions utiles au dimensionnement.
           </p>
         </div>
         <div className="stats" aria-label="Indicateurs de dimensionnement">
           <article>
-            <span>Section estimée du pilier</span>
-            <strong>{formatValue(model.metrics.section)} m²</strong>
-            <small>Hypothèse d’un pilier carré</small>
+            <span>Section géométrique du pilier</span>
+            <strong>{formatValue(model.metrics.squarePillarSection)} m²</strong>
+            <small>Calculée comme largeur² pour un pilier carré</small>
           </article>
           <article>
             <span>Longueur d’intrados</span>
@@ -321,7 +330,7 @@ function App() {
             <small>Depuis le pied des piliers</small>
           </article>
           <article>
-            <span>Flèche de la chainette extrados</span>
+            <span>Flèche de la chaînette renversée d’extrados</span>
             <strong>{formatValue(model.metrics.catenaryRise)} m</strong>
             <small>Comparaison rapide avec l’arc</small>
           </article>
@@ -335,12 +344,13 @@ function App() {
             <label key={key} className="control">
               <div className="control-head">
                 <span>{label}</span>
-                <output htmlFor={key}>
+                <output id={`${key}-value`}>
                   {formatValue(parameters[key], step < 0.1 ? 2 : 1)} {unit}
                 </output>
               </div>
               <input
                 id={key}
+                aria-describedby={`${key}-value`}
                 type="range"
                 min={min}
                 max={max}
@@ -368,7 +378,7 @@ function App() {
             </span>
             <span>
               <i className="legend-chip catenary"></i>
-              Chainettes
+              Chaînettes renversées
             </span>
           </div>
 
