@@ -1,0 +1,199 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.intro {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 70ch;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.stats article,
+.controls,
+.drawing-card {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.stats article {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+}
+
+.stats span,
+.control-head span,
+.stats small {
+  color: var(--text);
+}
+
+.stats strong {
+  color: var(--text-h);
+  font-size: 1.3rem;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.controls {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+}
+
+.controls h2 {
+  margin: 0;
+}
+
+.control {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.control-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.control output {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.control input {
+  width: 100%;
+}
+
+.drawing-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.legend span {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.legend-chip {
+  width: 1.1rem;
+  height: 0.3rem;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.legend-chip.arch {
+  background: rgba(184, 136, 76, 0.85);
+}
+
+.legend-chip.intrados {
+  background: #8b1e3f;
+}
+
+.legend-chip.extrados {
+  background: #004e89;
+}
+
+.legend-chip.catenary {
+  background: #0f766e;
+}
+
+.drawing {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 25 / 18;
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.background {
+  fill: #f8f3ea;
+}
+
+.pillar {
+  fill: #d5c2a0;
+  stroke: #8b6c42;
+  stroke-width: 2;
+}
+
+.arch-fill {
+  fill: rgba(184, 136, 76, 0.76);
+  stroke: rgba(116, 78, 30, 0.9);
+  stroke-width: 2;
+}
+
+.intrados-line,
+.extrados-line,
+.catenary-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.intrados-line {
+  stroke: #8b1e3f;
+  stroke-width: 3;
+}
+
+.extrados-line {
+  stroke: #004e89;
+  stroke-width: 3;
+}
+
+.catenary-line {
+  stroke: #0f766e;
+  stroke-width: 2.5;
+  stroke-dasharray: 10 8;
+}
+
+.catenary-line.outer {
+  opacity: 0.72;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    padding: 1rem;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
