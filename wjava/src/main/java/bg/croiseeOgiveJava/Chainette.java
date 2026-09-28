@@ -1,5 +1,7 @@
 package bg.croiseeOgiveJava;
 
+import java.awt.Color;
+
 import lombok.Getter;
 
 /**
@@ -7,11 +9,12 @@ import lombok.Getter;
  * https://fr.wikipedia.org/wiki/Cha%C3%AEnette
  */
 @Getter
-public class Chainette {
+public class Chainette implements ICourbe {
 
     private final double h;
     private final double r;
     private final double a;
+    Color color = Color.RED;
 
     public Chainette(double h, double r) {
        
@@ -21,7 +24,7 @@ public class Chainette {
     }
 
     /** y(x) = h - a (cosh(x/a) - 1) */
-    public double y(double x) {
+    public Double y(double x) {
         return h - a * (Math.cosh(x / a) - 1.0);
     }
 

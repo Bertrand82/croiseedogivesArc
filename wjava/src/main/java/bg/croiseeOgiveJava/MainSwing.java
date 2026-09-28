@@ -15,9 +15,14 @@ public class MainSwing {
         SwingUtilities.invokeLater(() -> {
             JFrame fenetre = new JFrame("Chaînette");
 
-            List<Chainette> liste = new ArrayList<>();
+            List<ICourbe> liste = new ArrayList<>();
             liste.add(new Chainette(140, 100));
-            liste.add(new Chainette(160, 120));
+            liste.add(new Chainette(160, 120)); 
+            liste.add(new TiersPoint(100));
+            liste.add(new TiersPoint(120));
+            liste.add(new ProjectionCroisee(100.));
+            liste.add(new ProjectionCroisee(120.));
+            
             CroiseeOgivesCanvas canvas =
                     new CroiseeOgivesCanvas(liste);
 

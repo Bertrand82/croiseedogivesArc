@@ -26,7 +26,7 @@ public class CroiseeOgivesCanvas extends JPanel {
 	private static final int MARGE = 50;
     private static final int NOMBRE_SEGMENTS = 500;
 
-    private final List<Chainette> chainettes;
+    private final List<ICourbe> chainettes;
 
     private  final Color couleurCourbe = new Color(40, 90, 180);
     private Color couleurAxes = new Color(130, 130, 130);
@@ -36,7 +36,7 @@ public class CroiseeOgivesCanvas extends JPanel {
         this(new ArrayList<>());
     }
 
-    public CroiseeOgivesCanvas(List<Chainette> chainettes) {
+    public CroiseeOgivesCanvas(List<ICourbe> chainettes) {
         if (chainettes == null) {
             throw new IllegalArgumentException("La liste de chaînettes ne peut pas être null.");
         }
@@ -90,7 +90,7 @@ public class CroiseeOgivesCanvas extends JPanel {
         double minY = Double.POSITIVE_INFINITY;
         double maxY = Double.NEGATIVE_INFINITY;
 
-        for (Chainette c : chainettes) {
+        for (ICourbe c : chainettes) {
             double r = c.getR();
             double h = c.getH();
 
@@ -169,26 +169,29 @@ public class CroiseeOgivesCanvas extends JPanel {
 
         g2.setStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-        for (Chainette chainette : chainettes) {
-            g2.setColor(couleurCourbe);
+        for (ICourbe chainette : chainettes) {
+            g2.setColor(chainette.getColor());
             
             double r = chainette.getR();
             double h = chainette.getH();
 
             Path2D.Double chemin = new Path2D.Double();
-
+            double kk=1.2;
+            boolean init = true;
             for (int i = 0; i <= NOMBRE_SEGMENTS; i++) {
                 double proportion = i / (double) NOMBRE_SEGMENTS;
-                double x = -2*r + proportion * (2.0 * 2 * r);
-                double y = chainette.y(x);
-
+                double x = -kk*r + proportion * (2.0 * kk * r);
+                Double y = chainette.y(x);
+                if (y != null) {
                 double ecranX = origineX + (x - minX) * echelle;
                 double ecranY = origineY + (maxY - y) * echelle;
-
-                if (i == 0) {
+               
+                if ( init) {
                     chemin.moveTo(ecranX, ecranY);
+                    init = false;
                 } else {
                     chemin.lineTo(ecranX, ecranY);
+                }
                 }
             }
 
@@ -233,7 +236,7 @@ public class CroiseeOgivesCanvas extends JPanel {
     // Test rapide
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            List<Chainette> liste = new ArrayList<>();
+            List<ICourbe> liste = new ArrayList<>();
             liste.add(new Chainette(100, 250));
             liste.add(new Chainette(60, 150));
             liste.add(new Chainette(40, 100));
