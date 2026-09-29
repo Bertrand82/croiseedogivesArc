@@ -61,4 +61,9 @@ public class QuartPointExtrados implements ICourbe{
 		
 	}
 
+	@Override
+	public Double getCenter() {
+		return null;
+	}
+
 }

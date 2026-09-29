@@ -7,42 +7,46 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class QuartPoint implements ICourbe{
+public class QuartPoint implements ICourbe {
 
 	double r;
 	double h;
-	double xCentre ;
-	double rCentre ;
+	double xCentre;
+	double rCentre;
 	Color color = Color.GREEN;
-	private final String titre="QuartPoint";
-	boolean controlable= true;
+	private final String titre = "QuartPoint";
+	boolean controlable = true;
 	boolean display = true;
 
 	public QuartPoint(double r) {
 		this.r = r;
-		
-		 xCentre = (r/2.);
-		 rCentre =r+xCentre;
-		 this.h = y(0);
-		
+
+		xCentre = (r / 2.);
+		rCentre = r + xCentre;
+		this.h = y(0);
 
 	}
 
 	public Double y(double x) {
 		Double y;
-		if (x < -r ) {
+		if (x < -r) {
 			y = null;
-		}else if (x > r) {
+		} else if (x > r) {
 			y = null;
-		}else {
+		} else {
 			if (x < 0) {
-				x =-x;
+				x = -x;
 			}
 			double xx = xCentre + x;
-			double yy2 = rCentre*rCentre-xx*xx;
+			double yy2 = rCentre * rCentre - xx * xx;
 			y = Math.sqrt(yy2);
 		}
 		return y;
+	}
+
+	@Override
+	public Double getCenter() {
+		return xCentre;
 	}
 
 }

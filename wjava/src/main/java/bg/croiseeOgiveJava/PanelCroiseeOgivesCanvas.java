@@ -26,7 +26,7 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 	private static final int MARGE_ = 50;
 	private static final int NOMBRE_SEGMENTS = 500;
 
-	private final List<ICourbe> chainettes;
+	private final List<ICourbe> courbes;
 
 	private final Color couleurCourbe = new Color(40, 90, 180);
 	private Color couleurAxes = new Color(130, 130, 130);
@@ -41,19 +41,19 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 			throw new IllegalArgumentException("La liste de chaînettes ne peut pas être null.");
 		}
 
-		this.chainettes = new ArrayList<>(chainettes);
+		this.courbes = new ArrayList<>(chainettes);
 		setPreferredSize(new Dimension(800, 500));
 		setBackground(Color.WHITE);
 	}
 
 	public void addChainette(Chainette chainette) {
 
-		this.chainettes.add(chainette);
+		this.courbes.add(chainette);
 		repaint();
 	}
 
 	public void clearChainettes() {
-		this.chainettes.clear();
+		this.courbes.clear();
 		repaint();
 	}
 
@@ -72,7 +72,7 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 	}
 
 	private void dessinerTout(Graphics2D g2) {
-		if (chainettes.isEmpty()) {
+		if (courbes.isEmpty()) {
 			g2.setColor(Color.DARK_GRAY);
 			g2.drawString("Aucune chaînette à afficher", 20, 20);
 			return;
@@ -84,7 +84,7 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 		double minY = Double.POSITIVE_INFINITY;
 		double maxY = Double.NEGATIVE_INFINITY;
 
-		for (ICourbe c : chainettes) {
+		for (ICourbe c : courbes) {
 			double r = c.getR();
 			double h = c.getH();
 
@@ -115,7 +115,7 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 		double origineY = (getHeight() - hauteurCourbe) / 2.0 - MARGE_ - 20;
 
 		dessinerAxes(g2, origineX, origineY, largeurCourbe, hauteurCourbe);
-		dessinerChainettes(g2, origineX, origineY, minX, maxY, echelle);
+		dessinerCourbes(g2, origineX, origineY, minX, maxY, echelle);
 		dessinerInformations(g2);
 	}
 
@@ -141,17 +141,17 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 		return 0.0;
 	}
 
-	private void dessinerChainettes(Graphics2D g2, double origineX, double origineY, double minX, double maxY,
+	private void dessinerCourbes(Graphics2D g2, double origineX, double origineY, double minX, double maxY,
 			double echelle) {
 
 		g2.setStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-		for (ICourbe chainette : chainettes) {
-			if (chainette.isDisplay()) {
-				g2.setColor(chainette.getColor());
+		for (ICourbe courbe : courbes) {
+			if (courbe.isDisplay()) {
+				g2.setColor(courbe.getColor());
 
-				double r = chainette.getR();
-				double h = chainette.getH();
+				double r = courbe.getR();
+				double h = courbe.getH();
 
 				Path2D.Double chemin = new Path2D.Double();
 				double kk = 1.2;
@@ -159,7 +159,7 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 				for (int i = 0; i <= NOMBRE_SEGMENTS; i++) {
 					double proportion = i / (double) NOMBRE_SEGMENTS;
 					double x = -kk * r + proportion * (2.0 * kk * r);
-					Double y = chainette.y(x);
+					Double y = courbe.y(x);
 					if (y != null) {
 						double ecranX = origineX + (x - minX) * echelle;
 						double ecranY = origineY + (maxY - y) * echelle;
@@ -176,10 +176,19 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 				g2.draw(chemin);
 
 				// Points remarquables
-				dessinerPoint(g2, origineX + (-0 - minX) * echelle, origineY + (maxY - 0.0) * echelle, "");
 				dessinerPoint(g2, origineX + (-r - minX) * echelle, origineY + (maxY - 0.0) * echelle, "(" + r + ")");
+				dessinerPoint(g2, origineX + (r - minX) * echelle, origineY + (maxY - 0.0) * echelle, "");
+				
 				dessinerPoint(g2, origineX + (0.0 - minX) * echelle, origineY + (maxY - h) * echelle, "(0, " + h + ")");
-				dessinerPoint(g2, origineX + (r - minX) * echelle, origineY + (maxY - 0.0) * echelle, "(" + r + ")");
+				if (courbe.getCenter() != null) {
+					g2.setColor(courbe.getColor());
+					dessinerPoint(g2, origineX + (courbe.getCenter()- minX) * echelle, origineY + (maxY - 0.0) * echelle, "Centre");
+					dessinerPoint(g2, origineX + (-courbe.getCenter()- minX) * echelle, origineY + (maxY - 0.0) * echelle, "Centre");
+									
+				}else {
+					dessinerPoint(g2, origineX + (-0 - minX) * echelle, origineY + (maxY - 0.0) * echelle, "");
+
+				}
 			}
 		}
 	}
@@ -190,13 +199,13 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 		int ecranX = (int) Math.round(x);
 		int ecranY = (int) Math.round(y);
 
-		g2.setColor(couleurPoints);
+		//g2.setColor(couleurPoints);
 		g2.fillOval(ecranX - rayon, ecranY - rayon, 2 * rayon, 2 * rayon);
 		g2.drawString(texte, ecranX + 8, ecranY - 8);
 	}
 
 	private void dessinerInformations(Graphics2D g2) {
-		String texte = "Nombre de chaînettes : " + chainettes.size();
+		String texte = "Nombre de chaînettes : " + courbes.size();
 
 		FontMetrics metriques = g2.getFontMetrics();
 		int x = (getWidth() - metriques.stringWidth(texte)) / 2;

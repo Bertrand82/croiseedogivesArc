@@ -79,4 +79,9 @@ public class Chainette implements ICourbe {
         System.out.println("y(0)  = " + c.y(0));
         System.out.println("y(r)  = " + c.y(250));
     }
+
+	@Override
+	public Double getCenter() {
+		return null;
+	}
 }

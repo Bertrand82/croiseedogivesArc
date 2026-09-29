@@ -19,4 +19,6 @@ public interface ICourbe {
 	 public boolean isDisplay();
 
 	 public void setDisplay(boolean b);
+	 
+	 public Double getCenter();
 }

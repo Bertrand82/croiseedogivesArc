@@ -56,4 +56,10 @@ public class ProjectionCroisee implements ICourbe{
 		return y;
 	}
 
+	@Override
+	public Double getCenter() {
+		// TODO Auto-generated method stub
+		return 0.0;
+	}
+
 }

@@ -46,4 +46,10 @@ public class TiersPoint implements ICourbe{
 		return y;
 	}
 
+	@Override
+	public Double getCenter() {
+		
+		return xCentre;
+	}
+
 }

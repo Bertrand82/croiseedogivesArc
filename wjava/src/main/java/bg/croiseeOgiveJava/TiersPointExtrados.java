@@ -31,9 +31,9 @@ public class TiersPointExtrados implements ICourbe{
 
 	public Double y(double x) {
 		Double y;
-		if (x < -r ) {
+		if (x < -r *1.01) {
 			y = null;
-		}else if (x > r) {
+		}else if (x > r*1.01) {
 			y = null;
 		}else {
 			if (x < 0) {
@@ -56,6 +56,11 @@ public class TiersPointExtrados implements ICourbe{
 	public void setDisplay(boolean b) {
 		this.tiersPoint.setDisplay(b);
 		
+	}
+
+	@Override
+	public Double getCenter() {
+		return this.tiersPoint.getCenter();
 	}
 
 }
