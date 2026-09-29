@@ -16,18 +16,21 @@ public class MainSwing {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame jframe = new JFrame("Croisée d'ogives");
-
-            QuartPoint quartPoint = new QuartPoint(100);
-            TiersPoint tiersPoints  = new TiersPoint(100);
+            double cote = 400;
+            double demiCote =cote/2;
+            double epaisseur =20;
+            QuartPoint quartPoint = new QuartPoint(demiCote);
+            TiersPoint tiersPoints  = new TiersPoint(demiCote);
+            ProjectionCroisee projectionCroisee = new ProjectionCroisee(demiCote);
             List<ICourbe> liste = new ArrayList<>();
-            liste.add(new Chainette(140, 100,"1"));
-            liste.add(new Chainette(160, 120,"2")); 
-            liste.add(new Chainette(tiersPoints.getH(), 100,"3")); 
+            liste.add(new Chainette(projectionCroisee.getH(), demiCote,"1"));
+            liste.add(new Chainette(projectionCroisee.getH()+20, demiCote+epaisseur,"2")); 
+            liste.add(new Chainette(tiersPoints.getH(), demiCote,"3")); 
             liste.add(tiersPoints);
-            liste.add(new TiersPointExtrados(tiersPoints, 20));
+            liste.add(new TiersPointExtrados(tiersPoints, epaisseur));
             liste.add(quartPoint);
-            liste.add(new QuartPointExtrados(quartPoint, 20));
-            liste.add(new ProjectionCroisee(100));
+            liste.add(new QuartPointExtrados(quartPoint, epaisseur));
+            liste.add(projectionCroisee);
             PanelCroiseeOgivesCanvas canvas =  new PanelCroiseeOgivesCanvas(liste);
             PanelControlGeneral panelControl = new PanelControlGeneral(liste);
             JPanel panelGlobal = new JPanel(new BorderLayout());

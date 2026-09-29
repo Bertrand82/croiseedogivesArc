@@ -176,10 +176,10 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 				g2.draw(chemin);
 
 				// Points remarquables
-				dessinerPoint(g2, origineX + (-r - minX) * echelle, origineY + (maxY - 0.0) * echelle, "(" + r + ")");
+				dessinerPoint(g2, origineX + (-r - minX) * echelle, origineY + (maxY - 0.0) * echelle, "(" + String.format("%.0f", r) + ")");
 				dessinerPoint(g2, origineX + (r - minX) * echelle, origineY + (maxY - 0.0) * echelle, "");
 				
-				dessinerPoint(g2, origineX + (0.0 - minX) * echelle, origineY + (maxY - h) * echelle, "(0, " + h + ")");
+				dessinerPoint(g2, origineX + (0.0 - minX) * echelle, origineY + (maxY - h) * echelle, "(0, " + String.format("%.0f", h)+ ")");
 				if (courbe.getCenter() != null) {
 					g2.setColor(courbe.getColor());
 					dessinerPoint(g2, origineX + (courbe.getCenter()- minX) * echelle, origineY + (maxY - 0.0) * echelle, "Centre");
