@@ -15,16 +15,17 @@ public class MainSwing {
         SwingUtilities.invokeLater(() -> {
             JFrame fenetre = new JFrame("Chaînette");
 
+            QuartPoint quartPoint = new QuartPoint(100);
+            TiersPoint tiersPoints  = new TiersPoint(100);
             List<ICourbe> liste = new ArrayList<>();
             liste.add(new Chainette(140, 100));
             liste.add(new Chainette(160, 120)); 
-            liste.add(new TiersPoint(100));
-            liste.add(new TiersPoint(120));
-            liste.add(new ProjectionCroisee(100.));
-            liste.add(new ProjectionCroisee(120.));
-            
-            CroiseeOgivesCanvas canvas =
-                    new CroiseeOgivesCanvas(liste);
+            liste.add(tiersPoints);
+            liste.add(new TiersPointExtrados(tiersPoints, 20));
+            liste.add(quartPoint);
+            liste.add(new QuartPointExtrados(quartPoint, 20));
+            liste.add(new ProjectionCroisee(100));
+            CroiseeOgivesCanvas canvas =  new CroiseeOgivesCanvas(liste);
 
             fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             fenetre.setContentPane(canvas);

@@ -23,7 +23,7 @@ public class CroiseeOgivesCanvas extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int MARGE = 50;
+	private static final int MARGE_ = 50;
     private static final int NOMBRE_SEGMENTS = 500;
 
     private final List<ICourbe> chainettes;
@@ -47,10 +47,7 @@ public class CroiseeOgivesCanvas extends JPanel {
     }
 
     public void addChainette(Chainette chainette) {
-        if (chainette == null) {
-            throw new IllegalArgumentException("La chaînette ne peut pas être null.");
-        }
-
+       
         this.chainettes.add(chainette);
         repaint();
     }
@@ -100,8 +97,8 @@ public class CroiseeOgivesCanvas extends JPanel {
             maxY = Math.max(maxY, h);
         }
 
-        int largeurDisponible = getWidth() - 2 * MARGE;
-        int hauteurDisponible = getHeight() - 2 * MARGE;
+        int largeurDisponible = getWidth() - 2 * MARGE_;
+        int hauteurDisponible = getHeight() - 4 * MARGE_;
 
         if (largeurDisponible <= 0 || hauteurDisponible <= 0) {
             return;
@@ -118,7 +115,7 @@ public class CroiseeOgivesCanvas extends JPanel {
         double hauteurCourbe = hauteurMonde * echelle;
 
         double origineX = (getWidth() - largeurCourbe) / 2.0;
-        double origineY = (getHeight() - hauteurCourbe) / 2.0;
+        double origineY = (getHeight() - hauteurCourbe) / 2.0 -   MARGE_ -20;
 
         dessinerAxes(g2, origineX, origineY, largeurCourbe, hauteurCourbe);
         dessinerChainettes(g2, origineX, origineY, minX, maxY, echelle);
@@ -139,9 +136,9 @@ public class CroiseeOgivesCanvas extends JPanel {
         int yZero = (int) Math.round(origineY + hauteurCourbe);
         g2.drawLine(
                 (int) Math.round(origineX),
-                yZero,
+                yZero ,
                 (int) Math.round(origineX + largeurCourbe),
-                yZero
+                yZero  
         );
 
         // Axe vertical x = 0
@@ -150,7 +147,7 @@ public class CroiseeOgivesCanvas extends JPanel {
                 xZero,
                 (int) Math.round(origineY),
                 xZero,
-                (int) Math.round(origineY + hauteurCourbe)
+                (int) Math.round(origineY + hauteurCourbe+2 * MARGE_+50)
         );
     }
 
