@@ -3,8 +3,10 @@ package bg.croiseeOgiveJava;
 import java.awt.Color;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ProjectionCroisee implements ICourbe{
 
 	final double r;
@@ -13,7 +15,10 @@ public class ProjectionCroisee implements ICourbe{
 	final double rayon ;
 	final double sinus45 = Math.sin(Math.PI/4);
 	final double h;
-	
+	private final String titre="Projection Diagonale";
+	boolean controlable= true;
+	boolean display = true;
+
 	Color color = Color.BLUE;
 
 

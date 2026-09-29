@@ -3,8 +3,10 @@ package bg.croiseeOgiveJava;
 import java.awt.Color;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class QuartPointExtrados implements ICourbe{
 
 	QuartPoint quartPoint;
@@ -14,6 +16,9 @@ public class QuartPointExtrados implements ICourbe{
 	double r;
 	double xCentre;
 	double rCentre;
+	private final String titre="QuartPoint";
+	boolean controlable= false;
+	
 
 	public QuartPointExtrados(QuartPoint quartPoint, double epaisseur) {
 		this.quartPoint = quartPoint;
@@ -42,6 +47,18 @@ public class QuartPointExtrados implements ICourbe{
 			y = Math.sqrt(yy2);
 		}
 		return y;
+	}
+
+	@Override
+	public boolean isDisplay() {
+	
+		return quartPoint.isDisplay();
+	}
+
+	@Override
+	public void setDisplay(boolean b) {
+		this.quartPoint.setDisplay(b);
+		
 	}
 
 }

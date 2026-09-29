@@ -11,4 +11,12 @@ public interface ICourbe {
 	 public double getH();
 
 	 public Color getColor();
+
+	 public String getTitre();
+
+	 public boolean isControlable();
+
+	 public boolean isDisplay();
+
+	 public void setDisplay(boolean b);
 }

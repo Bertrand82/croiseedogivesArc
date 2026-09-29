@@ -3,18 +3,24 @@ package bg.croiseeOgiveJava;
 import java.awt.Color;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Chaînette (arc) symétrique passant par (-r, 0), (0, h) et (r, 0).
  * https://fr.wikipedia.org/wiki/Cha%C3%AEnette
  */
 @Getter
+@Setter
 public class Chainette implements ICourbe {
 
     private final double h;
     private final double r;
     private final double a;
     Color color = Color.RED;
+	private final String titre="Chainette";
+	boolean controlable= true;
+	boolean display = true;
+
 
     public Chainette(double h, double r) {
        

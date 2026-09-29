@@ -1,9 +1,11 @@
 package bg.croiseeOgiveJava;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class MainSwing {
@@ -13,7 +15,7 @@ public class MainSwing {
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame fenetre = new JFrame("Chaînette");
+            JFrame jframe = new JFrame("Chaînette");
 
             QuartPoint quartPoint = new QuartPoint(100);
             TiersPoint tiersPoints  = new TiersPoint(100);
@@ -25,13 +27,16 @@ public class MainSwing {
             liste.add(quartPoint);
             liste.add(new QuartPointExtrados(quartPoint, 20));
             liste.add(new ProjectionCroisee(100));
-            CroiseeOgivesCanvas canvas =  new CroiseeOgivesCanvas(liste);
-
-            fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            fenetre.setContentPane(canvas);
-            fenetre.pack();
-            fenetre.setLocationRelativeTo(null);
-            fenetre.setVisible(true);
+            PanelCroiseeOgivesCanvas canvas =  new PanelCroiseeOgivesCanvas(liste);
+            PanelControlGeneral panelControl = new PanelControlGeneral(liste);
+            JPanel panelGlobal = new JPanel(new BorderLayout());
+            panelGlobal.add(canvas, BorderLayout.CENTER);
+            panelGlobal.add(panelControl,BorderLayout.WEST);
+            jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            jframe.setContentPane(panelGlobal);
+            jframe.pack();
+            jframe.setLocationRelativeTo(null);
+            jframe.setVisible(true);
         });
     }
 }

@@ -3,8 +3,10 @@ package bg.croiseeOgiveJava;
 import java.awt.Color;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class TiersPointExtrados implements ICourbe{
 
 	double r;
@@ -12,9 +14,12 @@ public class TiersPointExtrados implements ICourbe{
 	double xCentre ;
 	double rCentre ;
 	Color color = Color.yellow;
-
-
+	private final String titre="TiersPoint";
+	boolean controlable= false;
+	TiersPoint tiersPoint;
+	
 	public TiersPointExtrados(TiersPoint tiersPoint,double epaisseur) {
+		this.tiersPoint = tiersPoint;
 		this.r = tiersPoint.getR()+epaisseur;
 		
 		 xCentre =tiersPoint.getXCentre();
@@ -39,6 +44,18 @@ public class TiersPointExtrados implements ICourbe{
 			y = Math.sqrt(yy2);
 		}
 		return y;
+	}
+
+	@Override
+	public boolean isDisplay() {
+		
+		return tiersPoint.isDisplay();
+	}
+
+	@Override
+	public void setDisplay(boolean b) {
+		this.tiersPoint.setDisplay(b);
+		
 	}
 
 }

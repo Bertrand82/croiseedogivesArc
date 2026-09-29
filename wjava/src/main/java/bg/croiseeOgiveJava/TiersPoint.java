@@ -3,8 +3,10 @@ package bg.croiseeOgiveJava;
 import java.awt.Color;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class TiersPoint implements ICourbe{
 
 	double r;
@@ -12,6 +14,9 @@ public class TiersPoint implements ICourbe{
 	double xCentre ;
 	double rCentre ;
 	Color color = Color.yellow;
+	private final String titre="TiersPoint";
+	boolean controlable= true;
+	boolean display = true;
 
 
 	public TiersPoint(double r) {

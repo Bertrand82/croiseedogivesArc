@@ -3,8 +3,10 @@ package bg.croiseeOgiveJava;
 import java.awt.Color;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class QuartPoint implements ICourbe{
 
 	double r;
@@ -12,7 +14,9 @@ public class QuartPoint implements ICourbe{
 	double xCentre ;
 	double rCentre ;
 	Color color = Color.GREEN;
-
+	private final String titre="QuartPoint";
+	boolean controlable= true;
+	boolean display = true;
 
 	public QuartPoint(double r) {
 		this.r = r;
