@@ -210,9 +210,9 @@ public class PanelCroiseeOgivesCanvas extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			List<ICourbe> liste = new ArrayList<>();
-			liste.add(new Chainette(100, 250));
-			liste.add(new Chainette(60, 150));
-			liste.add(new Chainette(40, 100));
+			liste.add(new Chainette(100, 250,"1"));
+			liste.add(new Chainette(60, 150,"2"));
+			liste.add(new Chainette(40, 100,"3"));
 
 			JFrame fenetre = new JFrame("Chaînettes");
 			fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

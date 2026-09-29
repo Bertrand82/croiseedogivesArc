@@ -12,7 +12,7 @@ public class CroiseeOgivesTest {
     void laChainettePasseParLesTroisPoints() {
         double h = 2.5;
         double r = 2.0;
-        Chainette chainette = new Chainette(h, r);
+        Chainette chainette = new Chainette(h, r,"x");
 
         assertEquals(h, chainette.y(0.0), EPSILON);
         assertEquals(0.0, chainette.y(-r), EPSILON);
@@ -21,7 +21,7 @@ public class CroiseeOgivesTest {
 
     @Test
     void laChainetteEstSymetrique() {
-        Chainette chainette = new Chainette(2.5, 2.0);
+        Chainette chainette = new Chainette(2.5, 2.0,"0");
 
         assertEquals(chainette.y(-1.0), chainette.y(1.0), EPSILON);
     }

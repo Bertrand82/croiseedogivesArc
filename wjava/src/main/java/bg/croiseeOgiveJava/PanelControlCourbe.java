@@ -1,5 +1,6 @@
 package bg.croiseeOgiveJava;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,9 +34,13 @@ public class PanelControlCourbe extends JPanel {
 				
 			}
 		});
-		this.add(labelCouleur);
-		this.add(labelTitre);
-		this.add(this.checkBoxDisplay);
+		JPanel panelWest = new JPanel();
+		panelWest.add(labelCouleur);
+		panelWest.add(labelTitre);
+		panelWest.add(this.checkBoxDisplay);
+		this.setLayout(new BorderLayout());
+		this.add(panelWest,BorderLayout.WEST);
+		this.add(new JLabel());
 	}
 
 }

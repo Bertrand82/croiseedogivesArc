@@ -17,13 +17,13 @@ public class Chainette implements ICourbe {
     private final double r;
     private final double a;
     Color color = Color.RED;
-	private final String titre="Chainette";
+	private  String titre="Chainette";
 	boolean controlable= true;
 	boolean display = true;
 
 
-    public Chainette(double h, double r) {
-       
+    public Chainette(double h, double r, String label) {
+       this.titre = this.titre+" "+label;
         this.h = h;
         this.r = r;
         this.a = calculerA(h, r);
@@ -73,7 +73,7 @@ public class Chainette implements ICourbe {
     }
 
     public static void main(String[] args) {
-        Chainette c = new Chainette(100, 250);
+        Chainette c = new Chainette(100, 250,"1");
         System.out.println("a     = " + c.getA());
         System.out.println("y(-r) = " + c.y(-250));
         System.out.println("y(0)  = " + c.y(0));

@@ -15,13 +15,14 @@ public class MainSwing {
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame jframe = new JFrame("Chaînette");
+            JFrame jframe = new JFrame("Croisée d'ogives");
 
             QuartPoint quartPoint = new QuartPoint(100);
             TiersPoint tiersPoints  = new TiersPoint(100);
             List<ICourbe> liste = new ArrayList<>();
-            liste.add(new Chainette(140, 100));
-            liste.add(new Chainette(160, 120)); 
+            liste.add(new Chainette(140, 100,"1"));
+            liste.add(new Chainette(160, 120,"2")); 
+            liste.add(new Chainette(tiersPoints.getH(), 100,"3")); 
             liste.add(tiersPoints);
             liste.add(new TiersPointExtrados(tiersPoints, 20));
             liste.add(quartPoint);
